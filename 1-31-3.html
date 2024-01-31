@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <!-- font-family: 'Anton', sans-serif; -->
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        ul,ol,li{
+            list-style: none;
+        }
+        html,body{
+            height: 100vh;
+            width: 100vw;
+        }
+        body{
+            font-family: 'Anton', sans-serif;
+            background-image: linear-gradient(220deg, #1c1c1c, #5b5b5b);
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            transform: perspective(60rem);
+        }
+        .menu{}
+        .menu_list{
+            font-size: 4.5em;
+            line-height: 1.2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transform: rotateX(-10deg) rotateY(20deg);
+        }
+        .menu_item{
+            position: relative;
+            cursor: pointer;
+            color: transparent;
+        }
+        .menu_item::before{
+            content: "";
+            display: block;
+            position: absolute;
+            top: 49%;
+            left: -10%;
+            right: -10%;
+            height: 4px;
+            border-radius: 4px;
+            background-color: cornflowerblue;
+            margin-top: -2px;
+            z-index: 1;
+            transform: scale(0);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        .mask{
+            display: block;
+            position: absolute;
+            color: coral;
+            top: 0;
+            height: 49px;
+            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+        .mask span{
+            display: block;
+        }
+        .mask + .mask{
+            top: 48.9%;
+            height: 51.1%;
+        }
+        .mask + .mask span{
+            transform: translateY(-49%);
+        }
+        .menu_item:hover .mask,
+        .menu_item:active .mask{
+            color: white;
+            transform: skewX(12deg) translateX(5px);
+        }
+        .menu_item:hover::before{
+            transform: scale(1);
+        }
+        .menu_item:hover .mask + .mask span,
+        .menu_item:active .mask + .mask span{
+            transform: skewX(-12deg) translateX(5px) translateY(-49%);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <ul class="menu_list">
+            <li class="menu_item" data-offset="16">HOME
+                <span class="mask"><span>HOME</span></span>
+                <span class="mask"><span>HOME</span></span>
+            </li>
+            <li class="menu_item" data-offset="20">ABOUT
+                <span class="mask"><span>ABOUT</span></span>
+                <span class="mask"><span>ABOUT</span></span>
+            </li>
+            <li class="menu_item" data-offset="11">WORK
+                <span class="mask"><span>WORK</span></span>
+                <span class="mask"><span>WORK</span></span>
+            </li>
+            <li class="menu_item" data-offset="7">CONTACT
+                <span class="mask"><span>CONTACT</span></span>
+                <span class="mask"><span>CONTACT</span></span>
+            </li>
+        </ul><!-- menu_list -->
+    </div><!-- menu -->
+
+    <script src="js/jquery-3.7.1.js"></script>
+    <script lang="java">
+        $(function(){
+            var menu = $(".menu_list");
+            var item = $(".menu_item");
+            w = $(window).width();
+            h = $(window).height();
+
+            $(window).on("mousemove", function(e){
+                var offsetX = e.pageX / w;
+                var offsetY = e.pageY / h;
+                var dx = e.pageX - w/2;
+                var dy = e.pageY - h/2;
+                var theta = Math.atan2(dy, dx);
+                var angle = theta * 180 / Math.PI - 90;
+                var offsetPoster = menu.data("offset");
+                var transformPoster = 'translate3d(0, ' + -offsetX * offsetPoster + 'px, 0) rotateX(' + (-offsetY * offsetPoster) + 'deg) rotateY(' + (offsetX * (offsetPoster * 2)) + 'deg)'; //poster transform
+
+                if(angle < 0){
+                    angle = angle + 360;
+                }//if
+
+                menu.css("transform", transformPoster);
+
+                item.each(function(){
+                    offsetLayer = $(this).data("offset") || 0;
+                    var transformLayer = 'translate3d(' + offsetX * offsetLayer + 'px, ' + offsetY * offsetLayer + 'px, 20px)';
+                    $(this).css("transform", transformLayer);
+                })//each
+            
+            })//window).on("mousemove
+
+            // .mousemove라고 바로 써도 되지만
+            // 앞에 .on()붙여주면
+            // 이벤트 동작 여러개 한 번에 잡을 수 있음
+
+
+        })//jquery
+    </script>
+</body>
+</html>

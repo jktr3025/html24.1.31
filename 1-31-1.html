@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.7.1.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: lightcyan;
+            background-image: url("img/bg.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;        
+        }
+        .world{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            background-image: url("img/mario-cart-bg.png");
+        }
+        .cooper{
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+        }
+        .title{
+            position: absolute;
+            left: 50%;
+            bottom: -140px;
+            transform: translateX(-50%);
+            opacity: 0.1;
+        }
+        .title.show{
+            opacity: 1;
+            bottom: -40px;
+        }
+        .scroll{
+            position: fixed;
+            color: white;
+            left: 10px;
+            top: 10px;
+            font-size: 20px;
+        }
+        .button{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 10px solid orange;
+            position: fixed;
+            right: 0;
+            top: 0;
+            margin: 30px;
+            cursor: pointer;
+        }
+        .button.start{
+            background-color: transparent;
+        }
+        .button.speed{
+            border-color: brown;
+            /* top: 60px; */
+        }
+        .button.active{
+            width: 50px;
+            height: 50px;
+            background-color: lightsalmon;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="scroll">0</div>
+    <div class="button start"></div>
+
+    <div class="world">
+        <img src="img/mario-cart-cooper.png" alt="cooper" class="cooper">
+        <img src="img/mario-cart-title.png" alt="title" class="title">
+    </div><!-- world -->
+
+    <div class="bg" style="height: 5000px;"></div>
+
+    <script src="js/scroll.js"></script>
+    <script src="js/event.js"></script>
+</body>
+</html>
